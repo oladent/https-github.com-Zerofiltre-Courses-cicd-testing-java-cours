@@ -1,3 +1,3 @@
-# Dépôt des sources pour cours OpenClassrooms sur les tests en Java
+# Dépôt des sources JAVA pour cours CICD 
 
-Sources accompagnant le cours OpenClassrooms "Installez votre environnement de développement Java avec Eclipse".
+Sources accompagnant le cours "Continuous Integration, Continuous Delivery"
