@@ -16,7 +16,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class StatisticsCalculatorTest {
+   class StatisticsCalculatorTest {
 
 	@Spy
 	IntSummaryStatistics summaryStatistics = new IntSummaryStatistics();
@@ -24,12 +24,12 @@ public class StatisticsCalculatorTest {
 	StatisticsCalculator underTest;
 
 	@BeforeEach
-	public void setUp() {
+	   void setUp() {
 		underTest = new StatisticsCalculator(summaryStatistics);
 	}
 
 	@Test
-	public void average_shouldSample_allIntegersProvided() {
+	   void average_shouldSample_allIntegersProvided() {
 		final ArgumentCaptor<Integer> sampleCaptor = ArgumentCaptor.forClass(Integer.class);
 		final List<Integer> samples = Arrays.asList(2, 8, 5, 3, 7);
 
@@ -41,7 +41,7 @@ public class StatisticsCalculatorTest {
 	}
 
 	@Test
-	public void average_shouldReturnTheMean_ofAListOfIntegers() {
+	   void average_shouldReturnTheMean_ofAListOfIntegers() {
 		final List<Integer> samples = Arrays.asList(2, 8, 5, 3, 7);
 		final Integer result = underTest.average(samples);
 

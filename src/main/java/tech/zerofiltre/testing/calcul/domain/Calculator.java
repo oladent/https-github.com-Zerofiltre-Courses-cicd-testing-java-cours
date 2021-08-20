@@ -4,9 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.inject.Named;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Named
 public class Calculator {
+
+	Logger logger = LoggerFactory.getLogger(Calculator.class);
 
 	public int add(int a, int b) {
 		return a + b;
@@ -54,12 +58,12 @@ public class Calculator {
 		try {
 			Thread.sleep(500);
 		} catch (final InterruptedException e) {
-			e.printStackTrace();
+			logger.debug("Thread has been interrupted", e);
 		}
 	}
 
 	public Set<Integer> digitsSet(int number) {
-		final Set<Integer> integers = new HashSet<Integer>();
+		final Set<Integer> integers = new HashSet<>();
 		final String numberString = String.valueOf(number);
 
 		for (int i = 0; i < numberString.length(); i++) {
