@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 	}
 	
 	@Test
-	@Disabled("Test ambigu et hors limite du type double")
+	@Disabled("Test ambigue et hors limite du type double")
 	   void subTwoDoubleNumbers_shouldReturnsTheCorrectAnswer() {
 		// GIVEN
 		

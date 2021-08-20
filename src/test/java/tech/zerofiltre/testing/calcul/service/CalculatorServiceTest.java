@@ -115,8 +115,8 @@ class CalculatorServiceTest {
     when(calculator.divide(1, 0)).thenThrow(new ArithmeticException());
 
     // WHEN
-    assertThrows(IllegalArgumentException.class, () -> classUnderTest.calculate(
-        new CalculationModel(CalculationType.DIVISION, 1, 0)));
+    CalculationModel calculationModel = new CalculationModel(CalculationType.DIVISION, 1, 0);
+    assertThrows(IllegalArgumentException.class, () -> classUnderTest.calculate(calculationModel));
 
     // THEN
     verify(calculator, times(1)).divide(1, 0);
