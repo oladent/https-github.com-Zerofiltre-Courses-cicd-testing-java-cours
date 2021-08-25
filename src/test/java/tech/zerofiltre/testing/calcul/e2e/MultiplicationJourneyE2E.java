@@ -18,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-class MultiplicationJourneyE2ETest {
+class MultiplicationJourneyE2E {
 
   @LocalServerPort
   private int port;
