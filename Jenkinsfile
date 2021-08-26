@@ -1,56 +1,63 @@
 def CONTAINER_NAME = "calculator"
-def ENV_NAME = ${ getEnvName(env.BRANCH_NAME) }
-def CONTAINER_TAG = ${ getTag(env.BUILD_NUMBER, env.BRANCH_NAME) }
-def HTTP_PORT = ${getHTTPPort(env.BRANCH_NAME) }
+def ENV_NAME = getEnvName(env.BRANCH_NAME)
+def CONTAINER_TAG = getTag(env.BUILD_NUMBER, env.BRANCH_NAME)
+def HTTP_PORT = getHTTPPort(env.BRANCH_NAME)
+def EMAIL_RECIPIENTS = "philippe.guemkamsimo@gmail.com"
 
 
 node {
-
-    stage('Initialize') {
-        def dockerHome = tool 'DockerLatest'
-        def mavenHome = tool 'MavenLatest'
-        env.PATH = "${dockerHome}/bin:${mavenHome}/bin:${env.PATH}"
-    }
-
-    stage('Checkout') {
-        checkout scm
-    }
-
-    stage('Build with test') {
-        sh "mvn clean install"
-    }
-
-    stage('Sonarqube Analysis') {
-        withSonarQubeEnv('SonarQubeLocalServer') {
-            sh " mvn sonar:sonar -Dintegration-tests.skip=true -Dmaven.test.failure.ignore=true"
+    try {
+        stage('Initialize') {
+            def dockerHome = tool 'DockerLatest'
+            def mavenHome = tool 'MavenLatest'
+            env.PATH = "${dockerHome}/bin:${mavenHome}/bin:${env.PATH}"
         }
-        timeout(time: 1, unit: 'MINUTES') {
-            def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-            if (qg.status != 'OK') {
-                error "Pipeline aborted due to quality gate failure: ${qg.status}"
+
+        stage('Checkout') {
+            checkout scm
+        }
+
+        stage('Build with test') {
+
+            sh "mvn clean install"
+        }
+
+        stage('Sonarqube Analysis') {
+            withSonarQubeEnv('SonarQubeLocalServer') {
+                sh " mvn sonar:sonar -Dintegration-tests.skip=true -Dmaven.test.failure.ignore=true"
+            }
+            timeout(time: 1, unit: 'MINUTES') {
+                def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+                if (qg.status != 'OK') {
+                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                }
             }
         }
-    }
 
-    stage("Image Prune") {
-        imagePrune(CONTAINER_NAME)
-    }
-
-    stage('Image Build') {
-        imageBuild(CONTAINER_NAME, CONTAINER_TAG)
-    }
-
-    stage('Push to Docker Registry') {
-        withCredentials([usernamePassword(credentialsId: 'DockerhubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            pushToImage(CONTAINER_NAME, CONTAINER_TAG, USERNAME, PASSWORD)
+        stage("Image Prune") {
+            imagePrune(CONTAINER_NAME)
         }
-    }
 
-    stage('Run App') {
-        withCredentials([usernamePassword(credentialsId: 'DockerhubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            runApp(CONTAINER_NAME, CONTAINER_TAG, USERNAME, HTTP_PORT, ENV_NAME)
-
+        stage('Image Build') {
+            imageBuild(CONTAINER_NAME, CONTAINER_TAG)
         }
+
+        stage('Push to Docker Registry') {
+            withCredentials([usernamePassword(credentialsId: 'DockerhubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                pushToImage(CONTAINER_NAME, CONTAINER_TAG, USERNAME, PASSWORD)
+            }
+        }
+
+        stage('Run App') {
+            withCredentials([usernamePassword(credentialsId: 'DockerhubCredentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                runApp(CONTAINER_NAME, CONTAINER_TAG, USERNAME, HTTP_PORT, ENV_NAME)
+
+            }
+        }
+
+    } finally {
+        deleteDir()
+        sendEmail(EMAIL_RECIPIENTS);
     }
 
 }
@@ -75,10 +82,17 @@ def pushToImage(containerName, tag, dockerUser, dockerPassword) {
     echo "Image push complete"
 }
 
-def runApp(containerName, tag, dockerHubUser, httpPort,envName) {
+def runApp(containerName, tag, dockerHubUser, httpPort, envName) {
     sh "docker pull $dockerHubUser/$containerName"
-    sh "docker run --rm --env --env SPRING_ACTIVE_PROFILES=$envName -d -p $httpPort:$httpPort --name $containerName $dockerHubUser/$containerName:$tag"
+    sh "docker run --rm --env SPRING_ACTIVE_PROFILES=$envName -d -p $httpPort:$httpPort --name $containerName $dockerHubUser/$containerName:$tag"
     echo "Application started on port: ${httpPort} (http)"
+}
+
+def sendEmail(recipients) {
+    mail(
+            to: recipients,
+            subject: "Build ${env.BUILD_NUMBER} - ${currentBuild.currentResult} - (${currentBuild.fullDisplayName})",
+            body: "Check console output at: ${env.BUILD_URL}/console" + "\n")
 }
 
 String getEnvName(String branchName) {
