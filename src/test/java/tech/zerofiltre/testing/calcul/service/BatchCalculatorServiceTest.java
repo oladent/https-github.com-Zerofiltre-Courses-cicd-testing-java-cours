@@ -25,7 +25,7 @@ import tech.zerofiltre.testing.calcul.domain.model.CalculationModel;
 import tech.zerofiltre.testing.calcul.domain.model.CalculationType;
 
 @ExtendWith(MockitoExtension.class)
-public class BatchCalculatorServiceTest {
+   class BatchCalculatorServiceTest {
 
 	@Mock
 	CalculatorService calculatorService;
@@ -35,7 +35,7 @@ public class BatchCalculatorServiceTest {
 	BatchCalculatorService batchCalculatorServiceNoMock;
 
 	@BeforeEach
-	public void init() {
+	   void init() {
 		batchCalculatorService = new BatchCalculatorServiceImpl(calculatorService);
 
 		batchCalculatorServiceNoMock = new BatchCalculatorServiceImpl(
@@ -44,7 +44,7 @@ public class BatchCalculatorServiceTest {
 	}
 
 	@Test
-	public void givenOperationsList_whenbatchCalculate_thenReturnsCorrectAnswerList()
+	   void givenOperationsList_whenbatchCalculate_thenReturnsCorrectAnswerList()
 			throws IOException, URISyntaxException {
 		// GIVEN
 		final Stream<String> operations = Arrays.asList("2 + 2", "5 - 4", "6 x 8", "9 / 3").stream();
@@ -57,7 +57,7 @@ public class BatchCalculatorServiceTest {
 	}
 
 	@Test
-	public void givenOperationsList_whenbatchCalculate_thenCallsServiceWithCorrectArguments() {
+	   void givenOperationsList_whenbatchCalculate_thenCallsServiceWithCorrectArguments() {
 		// GIVEN
 		final Stream<String> operations = Arrays.asList("2 + 2", "5 - 4", "6 x 8", "9 / 3").stream();
 		final ArgumentCaptor<CalculationModel> calculationModelCaptor = ArgumentCaptor.forClass(CalculationModel.class);
@@ -79,7 +79,7 @@ public class BatchCalculatorServiceTest {
 	}
 
 	@Test
-	public void givenOperationsList_whenbatchCalculate_thenCallsServiceAndReturnsAnswer() {
+	   void givenOperationsList_whenbatchCalculate_thenCallsServiceAndReturnsAnswer() {
 		// GIVEN
 		final Stream<String> operations = Arrays.asList("2 + 2", "5 - 4", "6 x 8", "9 / 3").stream();
 		when(calculatorService.calculate(any(CalculationModel.class)))
@@ -113,7 +113,7 @@ public class BatchCalculatorServiceTest {
 	}
 
 	@Test
-	public void givenOperationsList_whenbatchCalculate_thenCallsServiceAndReturnsAnswer2() {
+	   void givenOperationsList_whenbatchCalculate_thenCallsServiceAndReturnsAnswer2() {
 		// GIVEN
 		final Stream<String> operations = Arrays.asList("2 + 2", "5 - 4", "6 x 8", "9 / 3").stream();
 		when(calculatorService.calculate(any(CalculationModel.class)))

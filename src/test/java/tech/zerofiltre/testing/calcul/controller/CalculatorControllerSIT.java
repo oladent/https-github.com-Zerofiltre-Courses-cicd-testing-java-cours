@@ -22,7 +22,7 @@ import tech.zerofiltre.testing.calcul.service.SolutionFormatter;
 
 @WebMvcTest(controllers = { CalculatorController.class, CalculatorService.class })
 @ExtendWith(SpringExtension.class)
-public class CalculatorControllerSIT {
+class CalculatorControllerSIT {
 
 	@Inject
 	private MockMvc mockMvc;
@@ -34,7 +34,7 @@ public class CalculatorControllerSIT {
 	private Calculator calculator;
 
 	@Test
-	public void givenACalculatorApp_whenRequestToAdd_thenSolutionIsShown() throws Exception {
+	void givenACalculatorApp_whenRequestToAdd_thenSolutionIsShown() throws Exception {
 		// GIVEN
 		when(calculator.add(2, 3)).thenReturn(5);
 

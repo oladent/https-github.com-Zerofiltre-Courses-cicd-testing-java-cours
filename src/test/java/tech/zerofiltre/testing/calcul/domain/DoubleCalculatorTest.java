@@ -4,17 +4,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-public class DoubleCalculatorTest {
+   class DoubleCalculatorTest {
 	private Calculator calculatorUnderTest;
 
 	@BeforeEach
-	public void initCalculator() {
+	   void initCalculator() {
 		calculatorUnderTest = new Calculator();
 	}
 	
 	@Test
-	@Disabled("Test ambigu et hors limite du type double")
-	public void subTwoDoubleNumbers_shouldReturnsTheCorrectAnswer() {
+	@Disabled("Test ambigue et hors limite du type double")
+	   void subTwoDoubleNumbers_shouldReturnsTheCorrectAnswer() {
 		// GIVEN
 		
 		// WHEN

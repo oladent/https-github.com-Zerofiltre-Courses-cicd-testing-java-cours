@@ -5,25 +5,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class SolutionFormatterTest {
+class SolutionFormatterTest {
 
-	private SolutionFormatter solutionFormatter;
+  private SolutionFormatter solutionFormatter;
 
-	@BeforeEach
-	public void initFormatter() {
-		solutionFormatter = new SolutionFormatterImpl();
-	}
+  @BeforeEach
+  void initFormatter() {
+    solutionFormatter = new SolutionFormatterImpl();
+  }
 
-	@Test
-	public void format_shouldFormatAnyBigNumber() {
-		// GIVEN
-		final int number = 1234567890;
+  @Test
+  void format_shouldFormatAnyBigNumber() {
+    // GIVEN
+    final int number = 1234567890;
 
-		// WHEN
-		final String result = solutionFormatter.format(number);
+    // WHEN
+    final String result = solutionFormatter.format(number);
 
-		// THEN
-		assertThat(result).isEqualTo("1 234 567 890");
-	}
+    // THEN
+    assertThat(result).isEqualTo("1 234 567 890");
+  }
 
 }
