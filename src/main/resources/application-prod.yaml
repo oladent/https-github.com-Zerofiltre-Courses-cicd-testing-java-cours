@@ -1,2 +1,15 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5436/calculator
+    username: postgres
+    password: mysecretpassword
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-prod.yaml
+
 server:
   port: 9001
