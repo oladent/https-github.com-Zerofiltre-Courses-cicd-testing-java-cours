@@ -8,5 +8,9 @@ spring:
     hibernate:
       ddl-auto: update
 
+  #disable liquibase at start-up
+  liquibase:
+    enabled: false
+
 server:
   port: 8999
