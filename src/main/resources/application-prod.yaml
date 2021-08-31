@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3309/calculator?serverTimezone=UTC
+    url: jdbc:mysql://host.docker.internal:3309/calculator?serverTimezone=UTC
     username: root
     password: my-secret-pw
 
