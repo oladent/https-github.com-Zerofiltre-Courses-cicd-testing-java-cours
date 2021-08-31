@@ -8,8 +8,8 @@ spring:
     hibernate:
       ddl-auto: none
   liquibase:
-    #disable liquibase at start-up
-    enabled: false
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-prod.yaml
 
 server:
   port: 9001
