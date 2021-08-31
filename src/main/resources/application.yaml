@@ -1,16 +1,10 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/calculator
-    username: postgres
-    password: mysecretpassword
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:mysql://localhost:3306/calculator?serverTimezone=UTC
+    username: root
+    password: my-secret-pw
 
   jpa:
-    databse-platform: org.hibernate.dialect.PostgreSQL9Dialect
-    properties:
-      hibernate:
-        temp:
-          use_jdbc_metadata_defaults: false
     hibernate:
       ddl-auto: update
 

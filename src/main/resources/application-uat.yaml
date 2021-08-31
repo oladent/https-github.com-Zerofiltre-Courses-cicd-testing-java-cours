@@ -1,9 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5435/calculator
-    username: postgres
-    password: mysecretpassword
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:mysql://localhost:3308/calculator?serverTimezone=UTC
+    username: root
+    password: my-secret-pw
 
   jpa:
     hibernate:

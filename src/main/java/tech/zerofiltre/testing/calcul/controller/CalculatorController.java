@@ -2,48 +2,56 @@ package tech.zerofiltre.testing.calcul.controller;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import tech.zerofiltre.testing.calcul.domain.model.Calculation;
 import tech.zerofiltre.testing.calcul.domain.model.CalculationModel;
 import tech.zerofiltre.testing.calcul.domain.model.CalculationType;
+import tech.zerofiltre.testing.calcul.repository.CalculationModelRepository;
 import tech.zerofiltre.testing.calcul.service.CalculatorService;
 
 @Controller
 public class CalculatorController {
 
-	public static final String CALCULATOR_TEMPLATE = "calculator";
+  public static final String CALCULATOR_TEMPLATE = "calculator";
 
-	@Inject
-	CalculatorService calculatorService;
+  CalculatorService calculatorService;
 
-	@GetMapping("/")
-	public String index(Calculation calculation) {
-		return "redirect:/calculator";
-	}
+  CalculationModelRepository calculationModelRepository;
 
-	@GetMapping("/calculator")
-	public String root(Calculation calculation) {
-		return CALCULATOR_TEMPLATE; // cf. resources/templates/calculator.html
-	}
+  public CalculatorController(CalculatorService calculatorService,
+      CalculationModelRepository calculationModelRepository) {
+    this.calculatorService = calculatorService;
+    this.calculationModelRepository = calculationModelRepository;
+  }
 
-	@PostMapping("/calculator")
-	public String calculate(@Valid Calculation calculation, BindingResult bindingResult, Model model) {
+  @GetMapping("/")
+  public String index(Calculation calculation) {
+    return "redirect:/calculator";
+  }
 
-		final CalculationType type = CalculationType.valueOf(calculation.getCalculationType());
-		final CalculationModel calculationModel = new CalculationModel(
-				type,
-				calculation.getLeftArgument(),
-				calculation.getRightArgument());
+  @GetMapping("/calculator")
+  public String root(Calculation calculation) {
+    return CALCULATOR_TEMPLATE; // cf. resources/templates/calculator.html
+  }
 
-		final CalculationModel response = calculatorService.calculate(calculationModel);
+  @PostMapping("/calculator")
+  public String calculate(@Valid Calculation calculation, BindingResult bindingResult, Model model) {
 
-		model.addAttribute("response", response);
-		return CALCULATOR_TEMPLATE; // cf. resources/templates/calculator.html
-	}
+    final CalculationType type = CalculationType.valueOf(calculation.getCalculationType());
+    final CalculationModel calculationModel = new CalculationModel(
+        type,
+        calculation.getLeftArgument(),
+        calculation.getRightArgument());
+
+    final CalculationModel response = calculatorService.calculate(calculationModel);
+
+    calculationModelRepository.save(response);
+
+    model.addAttribute("response", response);
+    return CALCULATOR_TEMPLATE; // cf. resources/templates/calculator.html
+  }
 }

@@ -2,7 +2,6 @@ package tech.zerofiltre.testing.calcul;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import tech.zerofiltre.testing.calcul.domain.model.CalculationModel;
 
 @SpringBootApplication
 public class CalculatorApp {
