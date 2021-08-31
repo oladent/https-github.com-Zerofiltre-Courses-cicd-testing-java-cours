@@ -1,0 +1,176 @@
+databaseChangeLog:
+- changeSet:
+    id: 1630417885343-1
+    author: philippe SIMO (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+            name: id
+            type: INT
+        - column:
+            name: formatted_solution
+            type: VARCHAR(255)
+        - column:
+            name: left_argument
+            type: INT
+        - column:
+            name: right_argument
+            type: INT
+        - column:
+            name: solution
+            type: INT
+        - column:
+            name: type
+            type: INT
+        - column:
+            name: type_symbol
+            type: VARCHAR(255)
+        tableName: calculation_model
+- changeSet:
+    id: 1630417885343-2
+    author: philippe SIMO (generated)
+    changes:
+    - insert:
+        columns:
+        - column:
+            name: id
+            valueNumeric: 1
+        - column:
+            name: formatted_solution
+            value: '497'
+        - column:
+            name: left_argument
+            valueNumeric: 45
+        - column:
+            name: right_argument
+            valueNumeric: 452
+        - column:
+            name: solution
+            valueNumeric: 497
+        - column:
+            name: type
+            valueNumeric: 0
+        - column:
+            name: type_symbol
+        tableName: calculation_model
+    - insert:
+        columns:
+        - column:
+            name: id
+            valueNumeric: 2
+        - column:
+            name: formatted_solution
+            value: '-407'
+        - column:
+            name: left_argument
+            valueNumeric: 45
+        - column:
+            name: right_argument
+            valueNumeric: 452
+        - column:
+            name: solution
+            valueNumeric: -407
+        - column:
+            name: type
+            valueNumeric: 3
+        - column:
+            name: type_symbol
+        tableName: calculation_model
+    - insert:
+        columns:
+        - column:
+            name: id
+            valueNumeric: 3
+        - column:
+            name: formatted_solution
+            value: '135'
+        - column:
+            name: left_argument
+            valueNumeric: 45
+        - column:
+            name: right_argument
+            valueNumeric: 3
+        - column:
+            name: solution
+            valueNumeric: 135
+        - column:
+            name: type
+            valueNumeric: 1
+        - column:
+            name: type_symbol
+        tableName: calculation_model
+    - insert:
+        columns:
+        - column:
+            name: id
+            valueNumeric: 4
+        - column:
+            name: formatted_solution
+            value: '-1'
+        - column:
+            name: left_argument
+            valueNumeric: 12
+        - column:
+            name: right_argument
+            valueNumeric: 13
+        - column:
+            name: solution
+            valueNumeric: -1
+        - column:
+            name: type
+            valueNumeric: 3
+        - column:
+            name: type_symbol
+        tableName: calculation_model
+    - insert:
+        columns:
+        - column:
+            name: id
+            valueNumeric: 5
+        - column:
+            name: formatted_solution
+            value: '1'
+        - column:
+            name: left_argument
+            valueNumeric: 4
+        - column:
+            name: right_argument
+            valueNumeric: 3
+        - column:
+            name: solution
+            valueNumeric: 1
+        - column:
+            name: type
+            valueNumeric: 3
+        - column:
+            name: type_symbol
+        tableName: calculation_model
+    - insert:
+        columns:
+        - column:
+            name: id
+            valueNumeric: 6
+        - column:
+            name: formatted_solution
+            value: '89'
+        - column:
+            name: left_argument
+            valueNumeric: 78
+        - column:
+            name: right_argument
+            valueNumeric: 11
+        - column:
+            name: solution
+            valueNumeric: 89
+        - column:
+            name: type
+        - column:
+            name: type_symbol
+            value: +
+        tableName: calculation_model
+
