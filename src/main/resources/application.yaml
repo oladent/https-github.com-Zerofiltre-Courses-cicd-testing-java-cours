@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/calculator?serverTimezone=UTC
+    username: root
+    password: my-secret-pw
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  #disable liquibase at start-up
+  liquibase:
+    enabled: false
+
+server:
+  port: 8999
